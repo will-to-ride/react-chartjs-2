@@ -1,5 +1,5 @@
 {
-  "name": "will-to-ride/react-chartjs-2",
+  "name": "react-chartjs-2",
   "version": "3.3.0",
   "description": "React components for Chart.js",
   "main": "dist/index.js",
