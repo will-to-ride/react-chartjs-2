@@ -20,10 +20,3 @@ jobs:
           install-command: yarn --frozen-lockfile --ignore-engines
       - name: Run tests
         run: yarn test
-      - name: Collect coverage
-        uses: codecov/codecov-action@v2
-        if: success()
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          fail_ci_if_error: true
