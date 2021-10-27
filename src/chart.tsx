@@ -34,6 +34,7 @@ function ChartComponent<
     getElementsAtEvent,
     fallbackContent,
     onClick: onClickProp,
+    onMouseOver: onMouseOverProp,
     ...props
   }: ChartProps<TType, TData, TLabel>,
   ref: ForwardedRef<ChartJS<TType, TData, TLabel>>
@@ -75,6 +76,47 @@ function ChartComponent<
   const onClick = (event: MouseEvent<HTMLCanvasElement>) => {
     if (onClickProp) {
       onClickProp(event);
+    }
+
+    const { current: chart } = chartRef;
+
+    if (!chart) return;
+
+    getDatasetAtEvent &&
+      getDatasetAtEvent(
+        chart.getElementsAtEventForMode(
+          event.nativeEvent,
+          'dataset',
+          { intersect: true },
+          false
+        ),
+        event
+      );
+    getElementAtEvent &&
+      getElementAtEvent(
+        chart.getElementsAtEventForMode(
+          event.nativeEvent,
+          'nearest',
+          { intersect: true },
+          false
+        ),
+        event
+      );
+    getElementsAtEvent &&
+      getElementsAtEvent(
+        chart.getElementsAtEventForMode(
+          event.nativeEvent,
+          'index',
+          { intersect: true },
+          false
+        ),
+        event
+      );
+  };
+
+  const onMouseOver = (event: MouseEvent<HTMLCanvasElement>) => {
+    if (onMouseOverProp) {
+      onMouseOverProp(event);
     }
 
     const { current: chart } = chartRef;
@@ -165,6 +207,7 @@ function ChartComponent<
       height={height}
       width={width}
       onClick={onClick}
+      onMouseOver={onMouseOver}
       {...props}
     >
       {fallbackContent}
